@@ -1,4 +1,3 @@
-import tkinter as tk
 from abc import ABC, abstractmethod
 
 class Shape(ABC):
@@ -14,7 +13,7 @@ class Shape(ABC):
 
     @staticmethod
     def draw_rubber_band(canvas, x1, y1, x2, y2):
-        pass
+        return canvas.create_line(x1, y1, x2, y2, fill="red")
 
 class Point(Shape):
     def draw(self, canvas):
