@@ -1,4 +1,3 @@
-import lab2.shapes as shapes
 from lab2.shapes import Shape, Point, Line, Rectangle, Ellipse 
 
 class Editor():
@@ -22,4 +21,34 @@ class Editor():
     def on_press(self, event):
         self.start_x = event.x
         self.start_y = event.y
-        
+
+    def on_drag(self, event):
+        if self.rubber_line_id:
+            self.canvas.delete(self.rubber_line_id)
+        self.rubber_line_id = Shape.draw_rubber_band(
+            self.canvas, self.start_x, self.start_y, event.x, event.y
+        )
+
+    def on_release(self, event):    
+        if self.rubber_line_id:
+            self.canvas.delete(self.rubber_line_id)
+            self.rubber_line_id = None
+
+        shape_obj = None
+        if self.current_shape_type == "Point":
+            shape_obj = Point(self.start_x, self.start_y)
+        elif self.current_shape_type == "Line":
+            shape_obj = Line(self.start_x, self.start_y, event.x, event.y)
+        elif self.current_shape_type == "Rectangle":
+            shape_obj = Rectangle(self.start_x, self.start_y, event.x, event.y)
+        elif self.current_shape_type == "Ellipse":
+            shape_obj = Ellipse(self.start_x, self.start_y, event.x, event.y)
+
+        if len(self.shapes) >= self.MAX_SHAPES:
+            print(f"Досягнуто ліміту об'єктів ({self.MAX_SHAPES})!")
+            return
+
+        if shape_obj:
+            shape_obj.draw(self.canvas)
+            self.shapes.append(shape_obj)
+            print(f"Додано об'єкт {self.current_shape_type}. Всього у масиві: {len(self.shapes)}/{self.MAX_SHAPES}")
