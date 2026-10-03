@@ -1,8 +1,8 @@
 ## Main module with visualization 
 import tkinter as tk
-import lab1.module1 as module1
-import lab1.module2_step1 as module2_step1
-import lab1.module2_step2 as module2_step2
+import module1 as module1
+import module2_step1 as module2_step1
+import module2_step2 as module2_step2
 
 class Main(tk.Tk):
     def __init__(self):

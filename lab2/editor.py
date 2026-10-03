@@ -1,4 +1,4 @@
-from lab2.shapes import Shape, Point, Line, Rectangle, Ellipse 
+from shapes import Shape, Point, Line, Rectangle, Ellipse 
 
 class Editor():
     def __init__(self, canvas):
