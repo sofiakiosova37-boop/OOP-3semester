@@ -10,6 +10,7 @@ class Editor():
         self.start_x = 0
         self.start_y = 0
         self.rubber_line_id = None
+        self.is_drawing = False
 
         self.canvas.bind('<ButtonPress-1>', self.on_press)
         self.canvas.bind('<B1-Motion>', self.on_drag)
@@ -17,12 +18,21 @@ class Editor():
 
     def set_shape_type(self, shape_type):
         self.current_shape_type = shape_type
+        self.is_drawing = False
+        self.start_x = 0
+        self.start_y = 0
+        if self.rubber_line_id:
+            self.canvas.delete(self.rubber_line_id)
+            self.rubber_line_id = None
 
     def on_press(self, event):
+        self.is_drawing = True
         self.start_x = event.x
         self.start_y = event.y
 
     def on_drag(self, event):
+        if not self.is_drawing: 
+            return
         if self.rubber_line_id:
             self.canvas.delete(self.rubber_line_id)
 
@@ -43,7 +53,10 @@ class Editor():
             self.canvas, self.start_x, self.start_y, event.x, event.y
         )
 
-    def on_release(self, event):    
+    def on_release(self, event): 
+        if not self.is_drawing:
+            return   
+        self.is_drawing = False
         if self.rubber_line_id:
             self.canvas.delete(self.rubber_line_id)
             self.rubber_line_id = None
