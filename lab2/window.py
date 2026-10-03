@@ -20,31 +20,20 @@ class Window():
         objects_menu = tk.Menu(menubar, tearoff=0)
 
         objects_menu = tk.Menu(menubar, tearoff=0)
-        objects_menu.add_command(label="Крапка", command=self.select_point)
-        objects_menu.add_command(label="Лінія", command=self.select_line)
-        objects_menu.add_command(label="Прямокутник", command=self.select_rectangle)
-        objects_menu.add_command(label="Еліпс", command=self.select_ellipse)
+        objects_menu.add_command(label="Крапка", command=lambda: self.select_shape("Point"))
+        objects_menu.add_command(label="Лінія", command=lambda: self.select_shape("Line"))
+        objects_menu.add_command(label="Прямокутник", command=lambda: self.select_shape("Rectangle"))
+        objects_menu.add_command(label="Еліпс", command=lambda: self.select_shape("Ellipse"))
         menubar.add_cascade(label="Об’єкти", menu=objects_menu)
 
         help_menu = tk.Menu(menubar, tearoff=0)
         help_menu.add_command(label="Про програму", command=self.show_about)
         menubar.add_cascade(label="Довідка", menu=help_menu)
 
-    def select_point(self):
-        self.editor.set_shape_type("Point")
-        self.root.title("OOP_lab2 - [Крапка]")
+    def select_shape(self, type):
+        self.editor.set_shape_type(type)
+        self.root.title(f"OOP_lab2 - {type}")
 
-    def select_line(self):
-        self.editor.set_shape_type("Line")
-        self.root.title("OOP_lab2 - [Лінія]")
-
-    def select_rectangle(self):
-        self.editor.set_shape_type("Rectangle")
-        self.root.title("OOP_lab2 - [Прямокутник]")
-
-    def select_ellipse(self):
-        self.editor.set_shape_type("Ellipse")
-        self.root.title("OOP_lab2 - [Еліпс]")
 
     def show_about(self):
         print("Лабораторна робота №2 з ООП")

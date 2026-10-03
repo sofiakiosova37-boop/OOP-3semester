@@ -35,6 +35,10 @@ class Editor():
             self.rubber_line_id = None
 
         shape_obj = None
+        if len(self.shapes) >= self.MAX_SHAPES:
+            print(f"Досягнуто ліміту об'єктів ({self.MAX_SHAPES})!")
+            return
+        
         if self.current_shape_type == "Point":
             shape_obj = Point(self.start_x, self.start_y)
         elif self.current_shape_type == "Line":
@@ -43,10 +47,6 @@ class Editor():
             shape_obj = Rectangle(self.start_x, self.start_y, event.x, event.y)
         elif self.current_shape_type == "Ellipse":
             shape_obj = Ellipse(self.start_x, self.start_y, event.x, event.y)
-
-        if len(self.shapes) >= self.MAX_SHAPES:
-            print(f"Досягнуто ліміту об'єктів ({self.MAX_SHAPES})!")
-            return
 
         if shape_obj:
             shape_obj.draw(self.canvas)
