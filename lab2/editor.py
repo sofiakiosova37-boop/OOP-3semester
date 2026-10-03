@@ -25,6 +25,20 @@ class Editor():
     def on_drag(self, event):
         if self.rubber_line_id:
             self.canvas.delete(self.rubber_line_id)
+
+        temp_shape = None
+        if self.current_shape_type == "Point":
+            temp_shape = Point(self.start_x, self.start_y, event.x, event.y)
+        elif self.current_shape_type == "Line":
+            temp_shape = Line(self.start_x, self.start_y, event.x, event.y)
+        elif self.current_shape_type == "Rectangle":
+            temp_shape = Rectangle(self.start_x, self.start_y, event.x, event.y)
+        elif self.current_shape_type == "Ellipse":
+            temp_shape = Ellipse(self.start_x, self.start_y, event.x, event.y)
+
+        if temp_shape:
+            self.rubber_line_id = temp_shape.draw_rubber_band(self.canvas)
+
         self.rubber_line_id = Shape.draw_rubber_band(
             self.canvas, self.start_x, self.start_y, event.x, event.y
         )
