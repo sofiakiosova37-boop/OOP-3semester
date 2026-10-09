@@ -32,12 +32,20 @@ class ToolTip():
 class Window():
     def __init__(self, root):
         self.root = root
-        self.root.title("OOP_lab2 - [Прямокутник]")
+        self.root.title("OOP_lab3 - [Прямокутник]")
         root.geometry("600x400") 
+        self.toolbar_frame = tk.Frame(root, bd=1, relief=tk.RAISED)
+        self.toolbar_frame.pack(side=tk.TOP, fill=tk.X)
         canvas = tk.Canvas(root, bg="lightgray")
         canvas.pack(fill=tk.BOTH, expand=True)
         self.editor = Editor(canvas)
+        
+        self.icons = {}
+        self.buttons = {}
+
         self.create_menu()
+        self.create_toolbar()
+        self.select_shape("Rectangle")
 
     def create_menu(self):
         menubar = tk.Menu(self.root)
@@ -46,21 +54,39 @@ class Window():
         file_menu.add_command(label="Вихід", command=self.root.quit)
         menubar.add_cascade(label="Файл", menu=file_menu)
         objects_menu = tk.Menu(menubar, tearoff=0)
+        self.selected_type_var = tk.StringVar(value="Rectangle")
 
-        objects_menu = tk.Menu(menubar, tearoff=0)
-        objects_menu.add_command(label="Крапка", command=lambda: self.select_shape("Point"))
-        objects_menu.add_command(label="Лінія", command=lambda: self.select_shape("Line"))
-        objects_menu.add_command(label="Прямокутник", command=lambda: self.select_shape("Rectangle"))
-        objects_menu.add_command(label="Еліпс", command=lambda: self.select_shape("Ellipse"))
+        shapes = [
+            ("Крапка", "Point"),
+            ("Лінія", "Line"),
+            ("Прямокутник", "Rectangle"),
+            ("Еліпс", "Ellipse")
+        ]
+
+        for label, shape_type in shapes:
+            self.objects_menu.add_radiobutton(
+                label=label,
+                variable=self.selected_type_var,
+                value=shape_type,
+                command=lambda st=shape_type: self.select_shape(st)
+            )
+        
         menubar.add_cascade(label="Об’єкти", menu=objects_menu)
-
         help_menu = tk.Menu(menubar, tearoff=0)
         help_menu.add_command(label="Про програму", command=self.show_about)
         menubar.add_cascade(label="Довідка", menu=help_menu)
 
+    def create_toolbar(self):
+        tools = [
+            ("Point", "Крапка", "dot.png"),
+            ("Line", "Лінія", "line.png"),
+            ("Rectangle", "Прямокутник", "rect.png"),
+            ("Ellipse", "Еліпс", "ellipse.png")
+        ]
+
     def select_shape(self, type):
         self.editor.set_shape_type(type)
-        self.root.title(f"OOP_lab2 - {type}")
+        self.root.title(f"OOP_lab3 - {type}")
 
 
     def show_about(self):
