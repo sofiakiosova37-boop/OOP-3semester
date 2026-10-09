@@ -29,27 +29,15 @@ class Line(Shape):
 
 class Rectangle(Shape):
     def draw(self, canvas):
-        width = abs(self.x2-self.x1)
-        height=abs(self.y2-self.y1)
-        left=((self.x1+self.x2)-(width))/2
-        right=((self.x1+self.x2)+(width))/2
-        top=((self.y1+self.y2)-(height))/2
-        bottom=((self.y1+self.y2)+(height))/2
         return canvas.create_rectangle(
-            left, top, 
-            right, bottom,
+            self.x1, self.y1, 
+            self.x2, self.y2,
             outline="black", fill="#8BF7FF"
         )
     def draw_rubber_band(self, canvas):
-        width = abs(self.x2-self.x1)
-        height=abs(self.y2-self.y1)
-        left=((self.x1+self.x2)-(width))/2
-        right=((self.x1+self.x2)+(width))/2
-        top=((self.y1+self.y2)-(height))/2
-        bottom=((self.y1+self.y2)+(height))/2
         return canvas.create_rectangle(
-            left, top, 
-            right, bottom,
+            self.x1, self.y1, 
+            self.x2, self.y2,
             outline="black", fill="#8BF7FF"
         )
 
