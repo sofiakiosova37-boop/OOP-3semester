@@ -1,5 +1,6 @@
 import tkinter as tk
 from editor import Editor
+import os
 
 class ToolTip():
     def __init__(self, widget, text):
@@ -72,28 +73,31 @@ class Window():
                 command=lambda st=shape_type: self.select_shape(st)
             )
         
-        menubar.add_cascade(label="Об’єкти", menu=objects_menu)
+        menubar.add_cascade(label="Об’єкти", menu=self.objects_menu)
         help_menu = tk.Menu(menubar, tearoff=0)
         help_menu.add_command(label="Про програму", command=self.show_about)
         menubar.add_cascade(label="Довідка", menu=help_menu)
 
     def create_toolbar(self):
+        base_dir = os.path.dirname(os.path.abspath(__file__))
         tools = [
             ("Point", "Крапка", "dot.png"),
             ("Line", "Лінія", "line.png"),
-            ("Rectangle", "Прямокутник", "rect.png"),
-            ("Ellipse", "Еліпс", "ellipse.png")
+            ("Rectangle", "Прямокутник", "rectangle.png"),
+            ("Ellipse", "Еліпс", "elipse.png")
         ]
 
         for shape_type, tooltip_text, icon_file in tools:
+            icon_path = os.path.join(base_dir, "icons", icon_file)
             try:
-                img = tk.PhotoImage(file=icon_file)
+                img = tk.PhotoImage(file=icon_path).subsample(3, 3)
                 self.icons[shape_type] = img
                 btn = tk.Button(
                     self.toolbar_frame, image=img, relief=tk.RAISED,
                     command=lambda st=shape_type: self.select_shape(st)
                 )
-            except Exception:
+            except Exception as e:
+                print(f"Не вдалося завантажити іконку {icon_path}: {e}")
                 btn = tk.Button(
                     self.toolbar_frame, text=shape_type[0], relief=tk.RAISED,
                     command=lambda st=shape_type: self.select_shape(st)
