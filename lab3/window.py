@@ -5,6 +5,7 @@ class ToolTip():
     def __init__(self, widget, text):
         self.widget = widget
         self.text= text
+        self.tip_window = None
         self.widget.bind("<Enter>", self.show_tip)
         self.widget.bind("<Leave>", self.hide_tip)
 
@@ -53,7 +54,7 @@ class Window():
         file_menu = tk.Menu(menubar, tearoff=0)
         file_menu.add_command(label="Вихід", command=self.root.quit)
         menubar.add_cascade(label="Файл", menu=file_menu)
-        objects_menu = tk.Menu(menubar, tearoff=0)
+        self.objects_menu = tk.Menu(menubar, tearoff=0)
         self.selected_type_var = tk.StringVar(value="Rectangle")
 
         shapes = [
@@ -84,8 +85,31 @@ class Window():
             ("Ellipse", "Еліпс", "ellipse.png")
         ]
 
+        for shape_type, tooltip_text, icon_file in tools:
+            try:
+                img = tk.PhotoImage(file=icon_file)
+                self.icons[shape_type] = img
+                btn = tk.Button(
+                    self.toolbar_frame, image=img, relief=tk.RAISED,
+                    command=lambda st=shape_type: self.select_shape(st)
+                )
+            except Exception:
+                btn = tk.Button(
+                    self.toolbar_frame, text=shape_type[0], relief=tk.RAISED,
+                    command=lambda st=shape_type: self.select_shape(st)
+                )
+            btn.pack(side=tk.LEFT, padx=2, pady=2)
+            ToolTip(btn, tooltip_text)
+            self.buttons[shape_type] = btn
+
     def select_shape(self, type):
         self.editor.set_shape_type(type)
+        self.selected_type_var.set(type)
+        for st, btn in self.buttons.items():
+            if st == type:
+                btn.config(relief=tk.SUNKEN) 
+            else: 
+                btn.config(relief=tk.RAISED)
         self.root.title(f"OOP_lab3 - {type}")
 
 
