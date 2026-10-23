@@ -67,3 +67,60 @@ class Ellipse(Shape):
             right, bottom,
             outline="red", dash=(4, 2)
         )
+
+# new figures
+    class line_circles(Line, Ellipse):
+        def draw(self, canvas):
+            Line.draw(self, canvas)
+            self.x2, self.y2 = (
+                self.x1,
+                self.y1,
+            30    )
+            canvas.create_oval(
+        self.x1 - 5, 
+        self.y1 - 5, 
+        self.x1 + 5, 
+        self.y1 + 5, 
+        fill="pink"
+    )
+            canvas.create_oval(
+        self.x2 - 5, 
+        self.y2 - 5, 
+        self.x2 + 5, 
+        self.y2 + 5, 
+        fill="purple"
+    )
+        def draw_rubber_band(self, canvas):
+            Line.draw_rubber_band(self, canvas)
+            canvas.create_oval(
+                self.x1 - 5,
+                self.y1 - 5,
+                self.x1 + 5,
+                self.y1 + 5,
+                outline="red",
+                dash=(2, 2),
+            )
+            canvas.create_oval(
+                self.x2 - 5,
+                self.y2 - 5,
+                self.x2 + 5,
+                self.y2 + 5,
+                outline="red",
+                dash=(2, 2),
+            )
+
+
+    class Cube(Line, Point):
+        def draw(self, canvas):
+            x_min=min(self.x1, self.x2)
+            x_max=max(self.x1, self.x2)
+            y_min=min(self.y1, self.y2)
+            y_max=max(self.y1, self.y2)
+            W=x_max - x_min
+            H=y_max - y_min
+            S= min(W, H)
+            L_UP = (x_min, y_min)
+            R_UP = (x_min + S, y_min)
+            L_DOWN = (x_min, y_min + S)
+            R_DOWN = (x_min + S, y_min + S)
+        def draw_rubber_band(self, canvas):
