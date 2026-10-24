@@ -40,7 +40,7 @@ class Rectangle(Shape):
             self.x2, self.y2,
             outline="red", dash=(4, 2)
         )
-
+"""
 class Ellipse(Shape):
     def draw(self, canvas):
         rx = abs(self.x2 - self.x1)
@@ -53,6 +53,37 @@ class Ellipse(Shape):
             left, top,
             right, bottom, 
             outline="black", fill="#72FF8C"
+        )
+
+
+    def draw_rubber_band(self, canvas):
+        rx = abs(self.x2 - self.x1)
+        ry = abs(self.y2 - self.y1)
+        left = self.x1 - rx
+        top = self.y1 - ry
+        right = self.x1 + rx
+        bottom = self.y1 + ry
+        return canvas.create_oval(
+            left, top,
+            right, bottom,
+            outline="red", dash=(4, 2)
+        )
+"""
+
+class Ellipse(Shape):
+    def draw(self, canvas, rx=None, ry=None, fill="#72FF8C"):
+        if rx is None:
+            rx = abs(self.x2 - self.x1)
+        if ry is None:
+            ry = abs(self.y2 - self.y1)
+        left = self.x1 - rx
+        top = self.y1 - ry
+        right = self.x1 + rx
+        bottom = self.y1 + ry
+        return canvas.create_oval(
+            left, top,
+            right, bottom, 
+            outline="black", fill=fill
         )
 
     def draw_rubber_band(self, canvas):
@@ -72,6 +103,12 @@ class Ellipse(Shape):
 class line_circles(Line, Ellipse):
     def draw(self, canvas):
         Line.draw(self, canvas)
+        Ellipse.draw(self, canvas, rx=5, ry=5, fill="pink")
+        ox, oy = self.x1, self.y1
+        self.x1, self.y1 = self.x2, self.y2
+        Ellipse.draw(self, canvas, rx=5, ry=5, fill="purple")
+        self.x1, self.y1 = ox, oy
+    """
         canvas.create_oval(
             self.x1 - 5, 
             self.y1 - 5, 
@@ -86,6 +123,7 @@ class line_circles(Line, Ellipse):
             self.y2 + 5, 
             fill="purple"
         )
+    """
     def draw_rubber_band(self, canvas):
         line_id = Line.draw_rubber_band(self, canvas)
         c1 = canvas.create_oval(
