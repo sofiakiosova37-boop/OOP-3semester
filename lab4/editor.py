@@ -110,3 +110,13 @@ class Editor():
             shape_obj.draw(self.canvas)
             self.shapes.append(shape_obj)
             print(f"Додано об'єкт {self.current_shape_type}. Всього у масиві: {len(self.shapes)}/{self.MAX_SHAPES}")
+
+    
+_global_editor = None
+def init_global_editor(canvas):
+    global _global_editor
+    if _global_editor is None:
+        _global_editor = Editor(canvas)
+    return _global_editor
+def get_editor():
+    return _global_editor    

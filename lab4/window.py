@@ -33,19 +33,26 @@ class ToolTip():
             self.tip_window = None
 
 class Window():
-    def __init__(self, root):
+    def __init__(self, root, toolbar_frame=None):
         self.root = root
         self.root.title("OOP_lab3 - [Прямокутник]")
         root.geometry("600x400") 
-        self.toolbar_frame = tk.Frame(root, bd=1, relief=tk.RAISED)
-        self.toolbar_frame.pack(side=tk.TOP, fill=tk.X)
-        canvas = tk.Canvas(root, bg="lightgray")
-        canvas.pack(fill=tk.BOTH, expand=True)
-        self.editor = Editor(canvas)
-        
+        #self.toolbar_frame = tk.Frame(root, bd=1, relief=tk.RAISED)
+        #self.toolbar_frame.pack(side=tk.TOP, fill=tk.X)
+        # canvas = tk.Canvas(root, bg="lightgray")
+        # canvas.pack(fill=tk.BOTH, expand=True)
+        #self.editor = Editor(canvas)
+        #from editor import init_global_editor
+        #self.editor = init_global_editor(canvas)
+        if toolbar_frame is not None:
+            self.toolbar_frame = toolbar_frame
+        else:
+            self.toolbar_frame = tk.Frame(root, bd=1, relief=tk.RAISED)
+            self.toolbar_frame.pack(side=tk.TOP, fill=tk.X)
+        from editor import get_editor
+        self.editor = get_editor()
         self.icons = {}
         self.buttons = {}
-
         self.create_menu()
         self.create_toolbar()
         self.select_shape("Rectangle")
@@ -123,8 +130,7 @@ class Window():
                 btn.config(relief=tk.SUNKEN) 
             else: 
                 btn.config(relief=tk.RAISED)
-        self.root.title(f"OOP_lab3 - {type}")
-
+        self.root.title(f"OOP_lab4 - {type}")
 
     def show_about(self):
         print("Лабораторна робота №4 з ООП")
