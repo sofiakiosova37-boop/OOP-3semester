@@ -1,6 +1,7 @@
 import tkinter as tk
 from editor import Editor
 import os
+from PIL import Image, ImageTk
 
 class ToolTip():
     def __init__(self, widget, text):
@@ -94,7 +95,8 @@ class Window():
         for shape_type, tooltip_text, icon_file in tools:
             icon_path = os.path.join(base_dir, "images", icon_file)
             try:
-                img = tk.PhotoImage(file=icon_path).subsample(3, 3)
+                pil_img = Image.open(icon_path).resize((24, 24), Image.Resampling.LANCZOS)
+                img = ImageTk.PhotoImage(pil_img)
                 self.icons[shape_type] = img
                 btn = tk.Button(
                     self.toolbar_frame, image=img, relief=tk.RAISED,
