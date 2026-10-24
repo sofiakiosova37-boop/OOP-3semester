@@ -16,14 +16,21 @@ class Editor():
         self.canvas.bind('<B1-Motion>', self.on_drag)
         self.canvas.bind('<ButtonRelease-1>', self.on_release)
 
+    def _clear_rubber_band(self):
+        if self.rubber_line_id:
+            if isinstance(self.rubber_line_id, (list, tuple)):
+                for item_id in self.rubber_line_id:
+                    self.canvas.delete(item_id)
+            else:
+                self.canvas.delete(self.rubber_line_id)
+            self.rubber_line_id = None 
+
     def set_shape_type(self, shape_type):
         self.current_shape_type = shape_type
         self.is_drawing = False
         self.start_x = 0
         self.start_y = 0
-        if self.rubber_line_id:
-            self.canvas.delete(self.rubber_line_id)
-            self.rubber_line_id = None
+        self._clear_rubber_band()
 
     def on_press(self, event):
         self.is_drawing = True
@@ -34,7 +41,22 @@ class Editor():
         if not self.is_drawing: 
             return
         if self.rubber_line_id:
-            self.canvas.delete(self.rubber_line_id)
+            if isinstance(self.rubber_line_id, (list, tuple)):
+                for item_id in self.rubber_line_id:
+                    self.canvas.delete(item_id)
+            else:
+                self.canvas.delete(self.rubber_line_id)
+            self.rubber_line_id = None
+
+        
+        #self._clear_rubber_band()
+        #temp_shape = None
+        #if self.current_shape_type == "Point":
+         #   temp_shape = Point(self.start_x, self.start_y, event.x, event.y)
+        #if temp_shape:
+        #    self.rubber_line_id = temp_shape.draw_rubber_band(self.canvas)
+        #if self.rubber_line_id:
+        #   self.canvas.delete(self.rubber_line_id)
 
         temp_shape = None
         if self.current_shape_type == "Point":
@@ -57,8 +79,13 @@ class Editor():
         if not self.is_drawing:
             return   
         self.is_drawing = False
+       # self._clear_rubber_band()
         if self.rubber_line_id:
-            self.canvas.delete(self.rubber_line_id)
+            if isinstance(self.rubber_line_id, (list, tuple)):
+                for item_id in self.rubber_line_id:
+                    self.canvas.delete(item_id)
+            else:
+                self.canvas.delete(self.rubber_line_id)
             self.rubber_line_id = None
 
         shape_obj = None

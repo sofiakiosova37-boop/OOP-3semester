@@ -38,7 +38,7 @@ class Rectangle(Shape):
         return canvas.create_rectangle(
             self.x1, self.y1, 
             self.x2, self.y2,
-            outline="black", fill="#8BF7FF"
+            outline="red", dash=(4, 2)
         )
 
 class Ellipse(Shape):
@@ -87,23 +87,16 @@ class line_circles(Line, Ellipse):
             fill="purple"
         )
     def draw_rubber_band(self, canvas):
-        Line.draw_rubber_band(self, canvas)
-        canvas.create_oval(
-            self.x1 - 5,
-            self.y1 - 5,
-            self.x1 + 5,
-            self.y1 + 5,
-            outline="red",
-            dash=(2, 2),
+        line_id = Line.draw_rubber_band(self, canvas)
+        c1 = canvas.create_oval(
+            self.x1 - 5, self.y1 - 5, self.x1 + 5, self.y1 + 5,
+            outline="red", dash=(2, 2)
         )
-        canvas.create_oval(
-            self.x2 - 5,
-            self.y2 - 5,
-            self.x2 + 5,
-            self.y2 + 5,
-            outline="red",
-            dash=(2, 2),
+        c2 = canvas.create_oval(
+            self.x2 - 5, self.y2 - 5, self.x2 + 5, self.y2 + 5,
+            outline="red", dash=(2, 2)
         )
+        return (line_id, c1, c2)
 
 
 class Cube(Line, Point):
@@ -154,13 +147,13 @@ class Cube(Line, Point):
 
 
     def draw_rubber_band(self, canvas):
-                x_min = min(self.x1, self.x2)
-                x_max = max(self.x1, self.x2)
-                y_min = min(self.y1, self.y2)
-                y_max = max(self.y1, self.y2)
-                W = x_max - x_min
-                H = y_max - y_min
-                S = min(W, H)
-                return canvas.create_rectangle(
-                    x_min, y_min, x_min + S, y_min + S, outline="red", dash=(4, 2)
-                )
+        x_min = min(self.x1, self.x2)
+        x_max = max(self.x1, self.x2)
+        y_min = min(self.y1, self.y2)
+        y_max = max(self.y1, self.y2)
+        W = x_max - x_min
+        H = y_max - y_min
+        S = min(W, H)
+        return canvas.create_rectangle(
+            x_min, y_min, x_min + S, y_min + S, outline="red", dash=(4, 2)
+        )
