@@ -119,8 +119,15 @@ class Ellipse(Shape):
             W=x_max - x_min
             H=y_max - y_min
             S= min(W, H)
+            verticles = [
             L_UP = (x_min, y_min)
             R_UP = (x_min + S, y_min)
             L_DOWN = (x_min, y_min + S)
             R_DOWN = (x_min + S, y_min + S)
+            L_UP_BACK = (x_min + S*0.3, y_min - S*0.3)
+            R_UP_BACK = (x_min + S*1.3+S, y_min - S*0.3)
+            L_DOWN_BACK = (x_min + S*0.3, y_min + S-S*0.3)
+            R_DOWN_BACK = (x_min + S*0.3+S, y_min + S-S*0.3)
+            ]
+        
         def draw_rubber_band(self, canvas):
