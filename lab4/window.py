@@ -63,7 +63,7 @@ class Window():
             ("Лінія", "Line"),
             ("Прямокутник", "Rectangle"),
             ("Еліпс", "Ellipse"),
-            ("Лінія з колами", "Line_circles"),
+            ("Лінія з колами", "line_circles"),
             ("Куб", "Cube")
         ]
 
@@ -87,12 +87,12 @@ class Window():
             ("Line", "Лінія", "line.png"),
             ("Rectangle", "Прямокутник", "rectangle.png"),
             ("Ellipse", "Еліпс", "elipse.png"),
-            ("Line_circles", "Лінія з колами", "line_circles.png"),
+            ("line_circles", "Лінія з колами", "line_circles.png"),
             ("Cube", "Куб", "cube.png")
         ]
 
         for shape_type, tooltip_text, icon_file in tools:
-            icon_path = os.path.join(base_dir, "icons", icon_file)
+            icon_path = os.path.join(base_dir, "images", icon_file)
             try:
                 img = tk.PhotoImage(file=icon_path).subsample(3, 3)
                 self.icons[shape_type] = img
