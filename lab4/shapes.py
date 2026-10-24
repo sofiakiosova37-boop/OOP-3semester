@@ -154,13 +154,13 @@ class Cube(Line, Point):
 
 
     def draw_rubber_band(self, canvas):
-        x_min = min(self.x1, self.x2)
-        x_max = max(self.x1, self.x2)
-        y_min = min(self.y1, self.y2)
-        y_max = max(self.y1, self.y2)
-        W = x_max - x_min
-        H = y_max - y_min
-        S = min(W, H)
-        return canvas.create_rectangle(
-            x_min, y_min, x_min + S, y_min + S, outline="red", dash=(4, 2)
-        )
+                x_min = min(self.x1, self.x2)
+                x_max = max(self.x1, self.x2)
+                y_min = min(self.y1, self.y2)
+                y_max = max(self.y1, self.y2)
+                W = x_max - x_min
+                H = y_max - y_min
+                S = min(W, H)
+                return canvas.create_rectangle(
+                    x_min, y_min, x_min + S, y_min + S, outline="red", dash=(4, 2)
+                )
