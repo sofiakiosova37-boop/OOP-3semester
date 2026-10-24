@@ -72,24 +72,20 @@ class Ellipse(Shape):
     class line_circles(Line, Ellipse):
         def draw(self, canvas):
             Line.draw(self, canvas)
-            self.x2, self.y2 = (
-                self.x1,
-                self.y1,
-            30    )
             canvas.create_oval(
-        self.x1 - 5, 
-        self.y1 - 5, 
-        self.x1 + 5, 
-        self.y1 + 5, 
-        fill="pink"
-    )
+                self.x1 - 5, 
+                self.y1 - 5, 
+                self.x1 + 5, 
+                self.y1 + 5, 
+                fill="pink"
+            )
             canvas.create_oval(
-        self.x2 - 5, 
-        self.y2 - 5, 
-        self.x2 + 5, 
-        self.y2 + 5, 
-        fill="purple"
-    )
+                self.x2 - 5, 
+                self.y2 - 5, 
+                self.x2 + 5, 
+                self.y2 + 5, 
+                fill="purple"
+            )
         def draw_rubber_band(self, canvas):
             Line.draw_rubber_band(self, canvas)
             canvas.create_oval(
@@ -129,5 +125,42 @@ class Ellipse(Shape):
                 (x_min + S + delta, y_min - delta),  # 5: R_UP_BACK 
                 (x_min + S + delta, y_min + S - delta),  # 6: R_DOWN_BACK 
                 (x_min + delta, y_min + S - delta),  # 7: L_DOWN_BACK 
-]
+                ]
+            edges = [
+                (0, 1),
+                (1, 2),
+                (2, 3),
+                (3, 0),  
+                (4, 5),
+                (5, 6),
+                (6, 7),
+                (7, 4),  
+                (0, 4),
+                (1, 5),
+                (2, 6),
+                (3, 7),  
+            ]
+
+            for start_idx, end_idx in edges:
+                p1 = vertices[start_idx]
+                p2 = vertices[end_idx]
+                self.x1, self.y1 = p1
+                self.x2, self.y2 = p2
+                Line.draw(self, canvas)
+
+            for px, py in vertices:
+                self.x1, self.y1 = px, py
+                Point.draw(self, canvas)
+
+
         def draw_rubber_band(self, canvas):
+            x_min = min(self.x1, self.x2)
+            x_max = max(self.x1, self.x2)
+            y_min = min(self.y1, self.y2)
+            y_max = max(self.y1, self.y2)
+            W = x_max - x_min
+            H = y_max - y_min
+            S = min(W, H)
+            return canvas.create_rectangle(
+                x_min, y_min, x_min + S, y_min + S, outline="red", dash=(4, 2)
+            )
