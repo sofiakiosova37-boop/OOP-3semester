@@ -1,5 +1,4 @@
-# numver 13
-
+# number 13
 import tkinter as tk
 from window import Window
 
