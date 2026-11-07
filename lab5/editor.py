@@ -1,7 +1,4 @@
-
 from shapes import Shape, Point, Line, Rectangle, Ellipse, line_circles, Cube
-
-
 
 class Editor():
     def __init__(self, canvas):

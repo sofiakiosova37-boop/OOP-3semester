@@ -229,9 +229,9 @@ class Window():
         print("exit_app вызван")
         answer = self.ask_save()
         if answer == "cancel":
-            return                      # лишаємось у програмі
+            return                      
         if answer == "save" and not self.save_file():
-            return                      # обрали "Зберегти", але скасували вікно збереження
+            return                     
         if self.table is not None:
             self.table.close()
         self.root.destroy()
@@ -245,13 +245,11 @@ class Window():
         dialog.resizable(False, False)
         dialog.transient(self.root)
 
-        # розмір і центрування відносно головного вікна
         w, h = 420, 190
         x = self.root.winfo_x() + (self.root.winfo_width() - w) // 2
         y = self.root.winfo_y() + (self.root.winfo_height() - h) // 2
         dialog.geometry(f"{w}x{h}+{x}+{y}")
 
-        # верхня біла частина
         top = tk.Frame(dialog, bg="white")
         top.pack(fill=tk.BOTH, expand=True)
         tk.Label(top, text="Зберегти роботу?", font=("Segoe UI", 14, "bold"),
@@ -259,9 +257,8 @@ class Window():
         tk.Label(top, text='У файлі "Без імені" є незбережені зміни.',
                  font=("Segoe UI", 10), bg="white", anchor="w").pack(fill=tk.X, padx=20)
 
-        tk.Frame(dialog, height=1, bg="#e0e0e0").pack(fill=tk.X)   # лінія-роздільник
+        tk.Frame(dialog, height=1, bg="#e0e0e0").pack(fill=tk.X)   
 
-        # нижня сіра частина з кнопками
         bottom = tk.Frame(dialog, bg="#f3f3f3")
         bottom.pack(fill=tk.X)
 
@@ -280,9 +277,9 @@ class Window():
                   command=lambda: choose("cancel")
                   ).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(5, 20), pady=15, ipady=4)
 
-        dialog.protocol("WM_DELETE_WINDOW", lambda: choose("cancel"))  # хрестик діалогу = скасувати
-        dialog.grab_set()                 # поки діалог відкритий, головне вікно недоступне
-        self.root.wait_window(dialog)     # чекаємо, поки діалог закриють
+        dialog.protocol("WM_DELETE_WINDOW", lambda: choose("cancel"))  
+        dialog.grab_set()                 
+        self.root.wait_window(dialog)     
         return result["value"]
 
     def load_file(self):
