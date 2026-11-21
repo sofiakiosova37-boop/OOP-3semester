@@ -7,7 +7,7 @@ import tkinter as tk
 import pyperclip 
 
 HOST = "127.0.0.1"
-PORT = 50003  # порт Object3
+PORT = 50003  
 
 root = tk.Tk()
 root.title("Object3")

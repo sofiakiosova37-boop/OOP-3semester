@@ -8,7 +8,7 @@ from tkinter import scrolledtext
 import pyperclip  
 
 HOST = "127.0.0.1"
-PORT = 50002  # порт Object2
+PORT = 50002  
 
 root = tk.Tk()
 root.title("Object2")
